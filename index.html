@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Labrador by anhldbk</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Labrador</h1>
+        <h2>A dead simple crawler</h2>
+        <a href="https://github.com/anhldbk/labrador" class="button"><small>View project on</small> GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h3>
+<a id="welcome-to-labrador" class="anchor" href="#welcome-to-labrador" aria-hidden="true"><span class="octicon octicon-link"></span></a>Welcome to Labrador.</h3>
+
+<p>Labrador is a free (MIT license), dead simple crawler based on Crawler4j.
+(Actually it's a fetcher with configurations you can easily manipulate.</p>
+
+<h3>
+<a id="how-to-use" class="anchor" href="#how-to-use" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to use?</h3>
+
+<p>Configure and run (no programming required)</p>
+
+<h3>
+<a id="how-to-configure" class="anchor" href="#how-to-configure" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to configure?</h3>
+
+<p>Configurations are stored in directory <code>data</code>:</p>
+
+<ul>
+<li>
+<code>data/config/crawler.properties</code>: misc configurations</li>
+<li>
+<code>data/config/domains.txt</code>: line-by-line domains to crawl</li>
+<li>
+<code>data/config/exclude.txt</code>: regular expressions to exclude Urls </li>
+<li>
+<code>data/config/seeds.txt</code>: several urls to initialize crawling processes</li>
+</ul>
+
+<h3>
+<a id="how-to-run" class="anchor" href="#how-to-run" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to run?</h3>
+
+<p>You can find Labrador binary in directory <code>dist</code>.
+To run it, simply issue commands:</p>
+
+<div class="highlight highlight-source-shell"><pre>java -jar labrador-assembly-1.0.jar</pre></div>
+
+<p>or</p>
+
+<div class="highlight highlight-source-shell"><pre>nohup java -jar labrador-assembly-1.0.jar  <span class="pl-k">&gt;</span> runtime.log <span class="pl-k">&amp;</span></pre></div>
+
+<h3>
+<a id="how-to-read-the-output" class="anchor" href="#how-to-read-the-output" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to read the output?</h3>
+
+<p>The output will be stored in directory <code>data/storage</code> (each domain has its own directory)</p>
+
+<p>For example: all pages fetched from <code>http://vnexpress.net</code> will be stored in <code>data/storage/vnexpress.net</code></p>
+
+<p>To get Html pages downloaded for a specific domain, you must know that:</p>
+
+<ul>
+<li><p>In the domain directory, there's a file named <code>site.info</code> storing downloaded urls in separated lines</p></li>
+<li><p>Lines' indices will be used to name files storing associated pages</p></li>
+</ul>
+
+<p>Below is the pseudo code to extract downloaded content:</p>
+
+<div class="highlight highlight-source-python"><pre>domain_directory <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>data/storage/vnexpress.net/<span class="pl-pds">'</span></span>
+info <span class="pl-k">=</span> read_file(domain_directory <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">'</span>site.info<span class="pl-pds">'</span></span>)
+index <span class="pl-k">=</span> <span class="pl-c1">0</span>
+<span class="pl-k">for</span> url <span class="pl-k">in</span> info.get_lines():
+    content <span class="pl-k">=</span> read_file(domain_directory <span class="pl-k">+</span> index.to_string())
+    <span class="pl-k">print</span> <span class="pl-s"><span class="pl-pds">"</span>url = <span class="pl-c1">%s</span> with content = <span class="pl-c1">%s</span><span class="pl-pds">"</span></span> <span class="pl-k">%</span> (url, content)</pre></div>
+
+<h3>
+<a id="how-to-rebuild-labrador" class="anchor" href="#how-to-rebuild-labrador" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to rebuild Labrador?</h3>
+
+<p>Labrador is written in Scala. To rebuild, please use SBT:</p>
+
+<div class="highlight highlight-source-shell"><pre>sbt assembly</pre></div>
+
+<h3>
+<a id="author" class="anchor" href="#author" aria-hidden="true"><span class="octicon octicon-link"></span></a>Author</h3>
+
+<p>Anh Le @ bigsonata.com</p>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/anhldbk/labrador/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/anhldbk/labrador/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/anhldbk/labrador"></a> is maintained by <a href="https://github.com/anhldbk">anhldbk</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
