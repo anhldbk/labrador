@@ -10,19 +10,29 @@ import scala.io.Source
  * Created by anhld on 1/6/16.
  */
 class PathInspector {
-  var excluded = mutable.MutableList[Pattern]()
-  var domains = mutable.MutableList[String]()
+  def getPatterns(filePath: String): mutable.MutableList[Pattern] = {
+    var res = new mutable.MutableList[Pattern]()
+    for (line <- Source.fromFile(filePath).getLines()) {
+      if (line.length != 0) {
+        if (!line.startsWith("#")) {
+          res += Pattern.compile(line.toLowerCase)
+        }
+      }
+    }
+    res
+  }
 
-  for (line <- Source.fromFile("data/config/exclude.txt").getLines()) {
-    if (line.length != 0) {
-      excluded += Pattern.compile(line.toLowerCase)
-    }
+  def isMatched(patterns: mutable.MutableList[Pattern], input: String): Boolean = {
+    patterns.foreach(pattern => {
+      if (pattern.matcher(input).matches()) {
+        return true
+      }
+    })
+    return false
   }
-  for (line <- Source.fromFile("data/config/domains.txt").getLines()) {
-    if (line.length != 0) {
-      domains += line.toLowerCase
-    }
-  }
+
+  val excluded = getPatterns("data/config/exclude.txt")
+  val domains = getPatterns("data/config/domains.txt")
 
   /**
    * Check if a URL need to be excluded
@@ -31,15 +41,13 @@ class PathInspector {
    *         Otherwise, returns false
    */
   def isExcluded(url: String): Boolean = {
-    excluded.foreach(pattern => {
-      if (pattern.matcher(url).matches()) {
-        return true
-      }
-    })
-
-    val host = Utils.getHost(url)
-    if (domains.contains(host.toLowerCase)) {
-      return false;
+    val lowerUrl = url.toLowerCase
+    if (isMatched(excluded, lowerUrl)) {
+      return true
+    }
+    val host = Utils.getHost(lowerUrl)
+    if (isMatched(domains, host)) {
+      return false
     }
 
     true

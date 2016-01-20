@@ -1,2 +1,6 @@
-nhattao.com
-www.5giay.vn
+(.+\.)?vnexpress.net
+(.+\.)?thanhnien.vn
+(.+\.)?kenh14.vn
+(.+\.)?yan.vn
+(.+\.)?ictnews.vn
+(.+\.)?genk.vn
