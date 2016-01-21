@@ -6,7 +6,7 @@ scalaVersion := "2.11.7"
 
 libraryDependencies += "edu.uci.ics" % "crawler4j" % "4.2"
 
-mainClass in assembly := Some("com.bigsonata.com.tools.labrador.Master")
+mainClass in assembly := Some("com.bigsonata.tools.labrador.Master")
 
 assemblyMergeStrategy in assembly := {
   case PathList("META-INF", "MANIFEST.MF") => MergeStrategy.discard
